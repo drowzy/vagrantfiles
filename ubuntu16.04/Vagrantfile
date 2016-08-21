@@ -1,5 +1,6 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby
+# https://github.com/hekar/vagrant-ubuntu-desktop-i3/blob/master/Vagrantfile
 Vagrant.configure(2) do |config|
   config.vm.box = "boxcutter/ubuntu1604"
   config.vm.box_check_update = false
@@ -24,7 +25,9 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision "shell", privileged:false, inline: <<-SHELL
     sudo apt update -y
-    sudo apt-get install -y i3 git vim zsh
+    sudo apt-get install -y curl
+    # setup dotfiles
+    curl -o- https://raw.githubusercontent.com/drowzy/dotfiles/master/bootstrap.sh | bash
     sudo apt install -y lightdm
     sudo systemctl enable lightdm
     sudo systemctl reboot
